@@ -6,11 +6,13 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"strings"
 
 	"github.com/wenooij/nuggit"
 	"github.com/wenooij/nuggit-spec/charts/ycharts"
 	"github.com/wenooij/nuggit/runtime"
 	"github.com/wenooij/nuggit/v1alpha"
+	"golang.org/x/net/html"
 )
 
 func main() {
@@ -20,11 +22,11 @@ func main() {
 
 	r := &runtime.StageRunner{
 		Graphs:  []*nuggit.Graph{g},
-		Factory: &v1alpha.Factory{},
+		Factory: v1alpha.Factory{},
 	}
 	if err := r.Run(context.Background()); err != nil {
 		panic(err)
 	}
 
-	fmt.Println(r.Results[0]["out"].(string))
+	fmt.Println(strings.TrimSpace(r.Results[0]["out"].(*html.Node).FirstChild.Data))
 }

@@ -1,5 +1,4 @@
-//go:build ychartsdot
-//go:build !windows
+//go:build ychartsdot && !windows
 
 package main
 
